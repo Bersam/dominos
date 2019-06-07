@@ -1,23 +1,19 @@
 from django.utils.translation import gettext as _
 from rest_framework import serializers
 
-from .models import Order, OrderItem, Customer, Pizza
-
-class PizzaSerializer(serializers.ModelSerializer):
-    flavor = serializers.CharField()
-    size = serializers.CharField()
-
-    class Meta:
-        model = Pizza
-        fields = ('flavor', 'size')
+from .models import Order, OrderItem, Customer
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    pizza = PizzaSerializer()
-
     class Meta:
         model = OrderItem
-        fields = ('pizza', 'count')
+        fields = ('flavor', 'size', 'count')
+
+    def to_representation(self, instance):
+        rep = super(OrderItemSerializer, self).to_representation(instance)
+        rep['flavor'] = instance.flavor.name
+        rep['size'] = instance.size.name
+        return rep
 
     def validate_count(self, value):
         if value >= 0:
@@ -38,9 +34,9 @@ class CustomerSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
-    customer = CustomerSerializer()
+    customer = CustomerSerializer(read_only=True)
     order_items = OrderItemSerializer(
-        source='get_items', many=True)
+        source='get_items', many=True, read_only=True)
     
 
     #TODO Set a validation to check state

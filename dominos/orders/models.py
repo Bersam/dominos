@@ -34,23 +34,6 @@ class Size(models.Model):
         return reverse("size_detail", kwargs={"pk": self.pk})
 
 
-class Pizza(models.Model):
-    size = models.ForeignKey(Size, verbose_name=_("Size"), on_delete=models.CASCADE)
-    flavor = models.ForeignKey(Flavor, verbose_name=_("Flavor"), on_delete=models.CASCADE)
-
-    #TODO change this model to abstract
-
-    class Meta:
-        verbose_name = _("Pizza")
-        verbose_name_plural = _("Pizzas")
-
-    def __str__(self):
-        return "{0} - {1}".format(self.flavor, self.size)
-
-    def get_absolute_url(self):
-        return reverse("pizza_detail", kwargs={"pk": self.pk})
-
-
 class Customer(models.Model):
     name = models.CharField(_("Customer Name"), max_length=50)
     address = models.TextField(_("Address"))
@@ -69,17 +52,18 @@ class Customer(models.Model):
 
 
 class OrderItem(models.Model):
-    pizza = models.ForeignKey(Pizza, verbose_name=_("Pizza"), on_delete=models.CASCADE)
-    #TODO replace with PositiveIntegerField
-    count = models.IntegerField(_("count"))
-    
+    size = models.ForeignKey(Size, verbose_name=_("Size"), on_delete=models.CASCADE)
+    flavor = models.ForeignKey(Flavor, verbose_name=_("Flavor"), on_delete=models.CASCADE)
+    count = models.PositiveIntegerField(_("count"))
+
 
     class Meta:
         verbose_name = _("OrderItem")
         verbose_name_plural = _("OrderItems")
+        ordering = ['id']
 
     def __str__(self):
-        return "{0} (x{1})".format(self.pizza, self.count)
+        return "{0} - {1} (x{2})".format(self.flavor, self.size, self.count)
 
     def get_absolute_url(self):
         return reverse("orderItem_detail", kwargs={"pk": self.pk})

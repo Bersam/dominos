@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Order, OrderItem, Pizza, Flavor, Size, Customer
+from .models import Order, OrderItem, Flavor, Size, Customer
 
 # Register your models here.
 
@@ -17,11 +17,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ('pizza', 'count')
-
-@admin.register(Pizza)
-class PizzaAdmin(admin.ModelAdmin):
-    list_display = ('flavor', 'size')
+    list_display = ('flavor', 'size', 'count')
 
 @admin.register(Flavor)
 class FlavorAdmin(admin.ModelAdmin):
