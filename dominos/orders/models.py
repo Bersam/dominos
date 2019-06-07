@@ -77,7 +77,7 @@ class OrderItem(models.Model):
         verbose_name_plural = _("OrderItems")
 
     def __str__(self):
-        return self.pizza.name
+        return "{0} (x{1})".format(self.pizza, self.count)
 
     def get_absolute_url(self):
         return reverse("orderItem_detail", kwargs={"pk": self.pk})
