@@ -44,7 +44,7 @@ class Pizza(models.Model):
         verbose_name_plural = _("Pizzas")
 
     def __str__(self):
-        return self.flavor.name
+        return "{0} - {1}".format(self.flavor, self.size)
 
     def get_absolute_url(self):
         return reverse("pizza_detail", kwargs={"pk": self.pk})
@@ -115,3 +115,6 @@ class Order(models.Model):
             self.created = timezone.now()
         self.modified = timezone.now()
         return super(Order, self).save(*args, **kwargs)
+
+    def get_items(self):
+        return OrderItem.objects.filter(order=self)

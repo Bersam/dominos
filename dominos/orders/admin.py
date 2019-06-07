@@ -4,13 +4,16 @@ from .models import Order, OrderItem, Pizza, Flavor, Size, Customer
 
 # Register your models here.
 
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id', 'customer', 'get_orders')
+
+    def get_orders(self, obj):
+        return ",\n".join([str(order_item) for order_item in obj.order_items.all()])
+
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ('name', 'phone', 'address')
-
-@admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'customer')
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
