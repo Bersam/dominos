@@ -17,3 +17,11 @@ Start the dev server for local development:
 ```bash
 docker-compose up
 ```
+
+# Tests
+
+To run tests:
+
+```bash
+docker-compose run --rm web ./manage.py test
+```
