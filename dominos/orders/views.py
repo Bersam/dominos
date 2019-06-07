@@ -15,3 +15,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     """
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
+
+
+#TODO Create a View for modifiying OrderItems of an item
+#TODO Create a View for modifiying Customers

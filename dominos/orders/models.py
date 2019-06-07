@@ -38,6 +38,7 @@ class Pizza(models.Model):
     size = models.ForeignKey(Size, verbose_name=_("Size"), on_delete=models.CASCADE)
     flavor = models.ForeignKey(Flavor, verbose_name=_("Flavor"), on_delete=models.CASCADE)
 
+    #TODO change this model to abstract
 
     class Meta:
         verbose_name = _("Pizza")
@@ -69,6 +70,7 @@ class Customer(models.Model):
 
 class OrderItem(models.Model):
     pizza = models.ForeignKey(Pizza, verbose_name=_("Pizza"), on_delete=models.CASCADE)
+    #TODO replace with PositiveIntegerField
     count = models.IntegerField(_("count"))
     
 
