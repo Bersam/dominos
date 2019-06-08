@@ -6,23 +6,16 @@ class OrderTest(TestCase):
     """ Test module for Puppy model """
 
     def setUp(self):
-        medium = Size.objects.create(
-            name='Medium'
-        )
-        large = Size.objects.create(
-            name='Large'
-        )
-        pepperoni = Flavor.objects.create(
-            name='Pepperoni'
-        )
-        margherita = Flavor.objects.create(
-            name='Margherita'
-        )
-        customer_1 = Customer.objects.create(
+        medium = Size.objects.create(name='Medium')
+        large = Size.objects.create(name='Large')
+        pepperoni = Flavor.objects.create(name='Pepperoni')
+        margherita = Flavor.objects.create(name='Margherita')
+        
+        customer = Customer.objects.create(
             name="Bersam", phone="+989371268912", address="Tehran/Iran"
         )
 
-        order = Order.objects.create(customer=customer_1)
+        order = Order.objects.create(customer=customer)
         order.order_items.create(flavor=pepperoni, size=medium, count=2)
         order.order_items.create(flavor=margherita, size=medium, count=3)
         order.order_items.create(flavor=margherita, size=large, count=1)
