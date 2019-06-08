@@ -21,6 +21,13 @@ class OrderItemSerializer(serializers.ModelSerializer):
         else:
             raise serializers.ValidationError(
                 _("Count should be non-negative."))
+    
+    def validate(self, value):
+        if self.instance and self.instance.get_order().state != 'DELIVERED':
+            return value
+        else:
+            raise serializers.ValidationError(
+                _("You can not change an order when it is delivered"))
 
 
 class CustomerSerializer(serializers.ModelSerializer):
@@ -37,9 +44,14 @@ class OrderSerializer(serializers.ModelSerializer):
     customer = CustomerSerializer(read_only=True)
     order_items = OrderItemSerializer(
         source='get_items', many=True, read_only=True)
+    state = serializers.ChoiceField(choices=Order.STATE_CHOICES)
     
-
-    #TODO Set a validation to check state
+    def validate(self, value):
+        if self.instance and self.instance.state != 'DELIVERED':
+            return value
+        else:
+            raise serializers.ValidationError(
+                _("You can not change an order when it is delivered"))
 
     class Meta:
         model = Order
