@@ -68,6 +68,9 @@ class OrderItem(models.Model):
     def get_absolute_url(self):
         return reverse("orderItem_detail", kwargs={"pk": self.pk})
 
+    def get_order(self):
+        return Order.objects.get(order_item=self)
+
 
 class Order(models.Model):
     order_items = models.ManyToManyField(OrderItem, verbose_name=_("Order Items"))
