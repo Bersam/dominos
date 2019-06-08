@@ -69,7 +69,7 @@ class OrderItem(models.Model):
         return reverse("orderItem_detail", kwargs={"pk": self.pk})
 
     def get_order(self):
-        return Order.objects.get(order_item=self)
+        return Order.objects.get(order_items=self)
 
 
 class Order(models.Model):
