@@ -27,10 +27,14 @@ class OrderTest(TestCase):
         order.order_items.create(flavor=margherita, size=medium, count=3)
         order.order_items.create(flavor=margherita, size=large, count=1)
 
-    def test_order(self):
+    def test_order_details(self):
         customer = Customer.objects.get(name="Bersam")
         order = Order.objects.filter(customer=customer).last()
         self.assertEqual(
             str(order), "Bersam #{0}".format(order.id))
         self.assertEqual(
             order.order_items.count(), 3)
+        order.state = "DELIVERED"
+        self.assertEqual(
+            order.state, "DELIVERED"
+        )
