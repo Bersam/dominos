@@ -54,3 +54,11 @@ class OrderItemViewSet(viewsets.ModelViewSet):
             return OrderItem.objects.filter(order=order)
         except (Order.DoesNotExist):
             raise NotFound(_("Order not found."))
+
+
+class CustomerViewSet(viewsets.ModelViewSet):
+    """
+    A ViewSet for listing or retrieving orders.
+    """
+    serializer_class = CustomerSerializer
+    queryset = Customer.objects.all()
