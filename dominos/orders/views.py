@@ -14,7 +14,22 @@ class OrderViewSet(viewsets.ModelViewSet):
     A ViewSet for listing or retrieving orders.
     """
     serializer_class = OrderSerializer
-    queryset = Order.objects.all()
+    #queryset = Order.objects.all()
+    def get_queryset(self):
+        queryset = Order.objects.all()
+        customerid = self.request.query_params.get('customer')
+        state = self.request.query_params.get('state')
+        try:
+            if customerid:
+                customer = Customer.objects.get(id=customerid)
+                queryset = queryset.filter(customer=customer)
+            if state:
+                queryset = queryset.filter(state=state)
+            return queryset
+        except Customer.DoesNotExist:
+            raise NotFound(_("Customer not found."))           
+        except Order.DoesNotExist:
+            raise NotFound(_("Order not found."))
 
 
 class OrderItemViewSet(viewsets.ModelViewSet):
