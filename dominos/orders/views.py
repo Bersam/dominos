@@ -38,9 +38,12 @@ class OrderItemViewSet(viewsets.ModelViewSet):
 
         try:
             order = Order.objects.get(id=orderid)
-            return OrderItem.objects.filter(order=order)[pk-1]
+            return OrderItem.objects.filter(order=order)[pk]
         except (OrderItem.DoesNotExist, IndexError, AssertionError):
+            raise NotFound(_("OrderItem not found."))
+        except Order.DoesNotExist:
             raise NotFound(_("Order not found."))
+
 
     def perform_create(self, serializer):
         orderid = self.kwargs.get("orderid", False)
@@ -52,7 +55,9 @@ class OrderItemViewSet(viewsets.ModelViewSet):
             order.order_items.add(order_item)
             order.save()
             return OrderItem.objects.filter(order=order)
-        except (Order.DoesNotExist):
+        except (OrderItem.DoesNotExist):
+            raise NotFound(_("OrderItem not found."))
+        except Order.DoesNotExist:
             raise NotFound(_("Order not found."))
 
 
