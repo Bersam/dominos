@@ -18,6 +18,14 @@ Start the dev server for local development:
 docker-compose up
 ```
 
+# Sample Data
+In order to check apis with sample data, Run this (You still need to create a superuser to use admin panel):
+
+```bash
+docker-compose run --rm web ./manage.py loaddata sampledata.json
+
+```
+
 # Tests
 
 To run tests:

@@ -1,0 +1,71 @@
+[
+{
+  "model": "orders.flavor",
+  "pk": 1,
+  "fields": {
+    "name": "Pepperoni"
+  }
+},
+{
+  "model": "orders.flavor",
+  "pk": 2,
+  "fields": {
+    "name": "Margherita"
+  }
+},
+{
+  "model": "orders.size",
+  "pk": 1,
+  "fields": {
+    "name": "Medium"
+  }
+},
+{
+  "model": "orders.size",
+  "pk": 2,
+  "fields": {
+    "name": "Large"
+  }
+},
+{
+  "model": "orders.customer",
+  "pk": 1,
+  "fields": {
+    "name": "Bersam Karbasion",
+    "address": "Tehran, Ghasr",
+    "phone": "+989371268912"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 1,
+  "fields": {
+    "size": 2,
+    "flavor": 2,
+    "count": 2
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 2,
+  "fields": {
+    "size": 1,
+    "flavor": 1,
+    "count": 45
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 1,
+  "fields": {
+    "customer": 1,
+    "state": "PROCESSING",
+    "created": "2019-06-08T20:57:32.889Z",
+    "modified": "2019-06-08T20:57:32.889Z",
+    "order_items": [
+      1,
+      2
+    ]
+  }
+}
+]
